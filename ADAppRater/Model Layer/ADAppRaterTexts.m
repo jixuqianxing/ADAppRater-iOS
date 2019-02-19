@@ -174,7 +174,8 @@ static NSString* const kFeedbackFormSubjectLocalKey = @"localFeedbackFormSubject
 
 - (NSString *)localizedStringForKey:(NSString *)key
 {
-    return [self.localizationBundle localizedStringForKey:key value:nil table:nil];
+    return NSLocalizedStringFromTableInBundle(key, nil, self.localizationBundle, nil);
+    //    return [self.localizationBundle localizedStringForKey:key value:nil table:nil];
 }
 
 - (NSBundle *)localizationBundle
@@ -185,25 +186,25 @@ static NSString* const kFeedbackFormSubjectLocalKey = @"localFeedbackFormSubject
         NSString *bundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ADAppRater" ofType:@"bundle"];
         _localizationBundle = [NSBundle bundleWithPath:bundlePath];
         
-        // Iterate over languages to find first localized language available
-        for (NSString* lang in [NSLocale preferredLanguages])
-        {
-            NSString* searchString = lang.copy;
-            
-            // If lang string not found - search language only with out locale
-            if (![_localizationBundle.localizations containsObject:searchString])
-            {
-                searchString = [searchString componentsSeparatedByString:@"-"][0];
-            }
-            
-            // Load language localization file if available
-            if ([_localizationBundle.localizations containsObject:searchString])
-            {
-                bundlePath = [_localizationBundle pathForResource:searchString ofType:@"lproj"];
-                _localizationBundle = [NSBundle bundleWithPath:bundlePath];
-                break;
-            }
-        }
+        //        // Iterate over languages to find first localized language available
+        //        for (NSString* lang in [NSLocale preferredLanguages])
+        //        {
+        //            NSString* searchString = lang.copy;
+        //
+        //            // If lang string not found - search language only with out locale
+        //            if (![_localizationBundle.localizations containsObject:searchString])
+        //            {
+        //                searchString = [searchString componentsSeparatedByString:@"-"][0];
+        //            }
+        //
+        //            // Load language localization file if available
+        //            if ([_localizationBundle.localizations containsObject:searchString])
+        //            {
+        //                bundlePath = [_localizationBundle pathForResource:searchString ofType:@"lproj"];
+        //                _localizationBundle = [NSBundle bundleWithPath:bundlePath];
+        //                break;
+        //            }
+        //        }
     }
     return _localizationBundle;
 }
